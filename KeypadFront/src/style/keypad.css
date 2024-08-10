@@ -1,0 +1,84 @@
+.table-style {
+    position:fixed;
+    table-layout: fixed;
+    background-color: #0071AE28;
+    bottom:0;
+    border:0;
+    width:100vw;
+    left:0;
+}
+.button-style {
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+    height: 63px;
+    margin: 0;
+    padding: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: #15b8f026;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.number-style {
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    margin-left: -25px;
+    top: 5px;
+}
+
+.input-group-style {
+    padding: 50px;
+    text-align: center;
+}
+
+.button-style img{
+    width:10%;
+    margin:0;
+    padding:0;
+    height: 80%;
+    color:blue;
+}
+
+.font{
+    color:white;
+    font-size: 150%;
+    font-weight: 700;
+}
+
+.pressed{
+    background: #0a57714d;
+}
+
+.wrapper{
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width:100%;
+}
+
+.input-group-style{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width:30%;
+    border-bottom: 2px black solid;
+}
+
+.circle{
+    border-radius: 50%;
+    background-color: #15b9f06c;
+    width:30px;
+    height:30px;
+    margin-left : 10px;
+}
+
+.filled{
+    background-color: #0e475a93;
+}
