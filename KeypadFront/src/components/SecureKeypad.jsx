@@ -8,7 +8,6 @@ export default function SecureKeypad({ keypad, handleClick }) {
 
     useEffect(() => {
         checkIsMobile();
-        console.log(isMobile);
       }, [isMobile]);
 
     // 기기가 모바일인지 확인하는 함수
