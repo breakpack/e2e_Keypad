@@ -20,7 +20,11 @@ export default function Page() {
       }
   };
 
-  if (states.keypad === null) {
+  const HashProps = {
+    Hash: states.Hash
+  };
+
+  if (states.keypad === null && states.Hash === null)  {
     return (
       <div>
         ...isLoading...
@@ -29,8 +33,8 @@ export default function Page() {
   } else {
     return (
       <div>
-        <KeypadUserInput ref={childRef}/>
-        <SecureKeypad keypad={states.keypad} onKeyPressed={actions.onKeyPressed} handleClick={handleClick}/>
+        <KeypadUserInput ref={childRef} {...HashProps}/>
+        <SecureKeypad keypad={states.keypad} handleClick={handleClick}/>
       </div>
     );
   }

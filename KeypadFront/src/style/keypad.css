@@ -6,6 +6,7 @@
     border:0;
     width:100vw;
     left:0;
+    bottom:0;
 }
 .button-style {
     width: 100%;
@@ -54,12 +55,14 @@
 }
 
 .wrapper{
-    margin-top: 20%;
-    display: flex;
+    position:fixed;
+    display:flex;
+    top:40%;
     justify-content: center;
     align-content: center;
     align-items: center;
     width:100%;
+    flex-direction: column;
 }
 
 .input-group-style{
@@ -67,15 +70,24 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    width:30%;
-    border-bottom: 2px black solid;
+    width:100%;
+    flex-direction: row;
+    margin-bottom: 0%;
+}
+
+.wrapper hr{
+    position:relative;
+    width:80%;
+    height:3px;
+    background-color: black;
+    border: none;
 }
 
 .circle{
-    border-radius: 50%;
+    border-radius: 100%;
     background-color: #15b9f06c;
-    width:30px;
-    height:30px;
+    width:3vh;
+    height:3vh;
     margin-left : 10px;
 }
 

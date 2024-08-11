@@ -1,9 +1,25 @@
 import '../style/keypad.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function SecureKeypad({ keypad, onKeyPressed, handleClick }) {
+export default function SecureKeypad({ keypad, handleClick }) {
     const [pressedKey, setPressedKey] = useState(null);
     const [randomPressedKey, setRandomPressedKey] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        checkIsMobile();
+        console.log(isMobile);
+      }, [isMobile]);
+
+    // 기기가 모바일인지 확인하는 함수
+    const checkIsMobile = () => {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (/android|iPad|iPhone|iPod|Windows Phone/i.test(userAgent)) {
+            setIsMobile(true);
+        } else {
+            setIsMobile(false);
+        }
+    };
 
     const buttonConfig = [
         [{ key: 'key1_1', position: '0 0' }, { key: 'key1_2', position: '-50px 0' }, { key: 'key1_3', position: '-100px 0' }, { key: 'key1_4', position: '-150px 0' }],
@@ -24,15 +40,12 @@ export default function SecureKeypad({ keypad, onKeyPressed, handleClick }) {
     };
 
     const handleMouseDown = (key) => {
-        if (key === 'Backspace' || key === 'Eraser') {
-            onKeyPressed(key);
-        } else {
+        handleClick(key);
+        if (key !== 'Backspace' && key !== 'Eraser') {
             const randomKey = getRandomKey(key);
             setPressedKey(key);
             setRandomPressedKey(randomKey);
-            onKeyPressed(key);
         }
-        handleClick(key);
     };
 
     const handleMouseUp = () => {
@@ -51,10 +64,10 @@ export default function SecureKeypad({ keypad, onKeyPressed, handleClick }) {
                                     <button
                                         type="button"
                                         className={`button-style ${pressedKey === button.key || randomPressedKey === button.key ? 'pressed' : ''}`}
-                                        onMouseDown={() => handleMouseDown(button.key)}
-                                        onMouseUp={handleMouseUp}
-                                        onTouchStart={() => handleMouseDown(button.key)}  // 모바일 터치 대응
-                                        onTouchEnd={handleMouseUp}  // 모바일 터치 대응
+                                        onMouseDown={isMobile ? undefined : () => handleMouseDown(button.key)}
+                                        onMouseUp={isMobile ? undefined : handleMouseUp}
+                                        onTouchStart={isMobile ? () => handleMouseDown(button.key) : undefined}  // 모바일 터치 대응
+                                        onTouchEnd={isMobile ? handleMouseUp : undefined}  // 모바일 터치 대응
                                     >
                                         <span
                                             className="number-style"
