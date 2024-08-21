@@ -47,16 +47,13 @@ class KeypadController(private val keypadService: KeypadService, private val red
 
             val restTemplate = RestTemplate()
             val endpointUrl = "http://146.56.119.112:8081/auth"
+            println(payload)
+            val response = restTemplate.postForObject(endpointUrl, payload, String::class.java)
 
-            return try {
-                println("payload: $payload")
-                val response = restTemplate.postForObject(endpointUrl, payload, String::class.java)
-                println("Response: $response")
-                ResponseEntity(response, HttpStatus.OK)
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                ResponseEntity("Error: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
+            return if (response != null && response.startsWith("SUCCESS")) {
+                ResponseEntity.ok(response)
+            } else {
+                ResponseEntity.status(400).body(response)
             }
         }
 
