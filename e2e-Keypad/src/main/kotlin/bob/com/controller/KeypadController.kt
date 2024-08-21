@@ -11,20 +11,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 import bob.com.service.RedisService
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 
 
 data class PostRequest(
     val userId: String,
     val userInput: String,
     val timestampHash: String
-)
-
-data class AuthPayload(
-    val userInput: String,
-    val keyHashMap: Map<String, String>
 )
 
 @RestController
@@ -58,7 +50,7 @@ class KeypadController(private val keypadService: KeypadService, private val red
 
             return try {
                 println("payload: $payload")
-                val response = restTemplate.postForObject<String>(endpointUrl, payload, String::class.java)
+                val response = restTemplate.postForObject(endpointUrl, payload, String::class.java)
                 println("Response: $response")
                 ResponseEntity(response, HttpStatus.OK)
 

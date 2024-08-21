@@ -13,8 +13,6 @@ MVGYnJ7arZ6rMN73nRxd0I9RVbe3LXEuHrBysxjfXae6z+qb+1Rp9MKnwiDuKC/i
 
 export default function EncryptHashArray(hashArray){
     const combinedHash = hashArray.join(""); // 배열을 "hash+hash+hash" 형태로 합침
-    console.log(hashArray);
-    console.log(combinedHash);
     const encrypt = new JSEncrypt();
     encrypt.setPublicKey(publicKey);
   

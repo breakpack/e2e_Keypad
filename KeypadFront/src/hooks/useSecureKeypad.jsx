@@ -25,7 +25,6 @@ export default function useSecureKeypad() {
 
   const sendUserInput = async (ResultList) => {
     const encrypted = Encrypt(ResultList);
-    console.log(encrypted);
     const data =  {
       userId: userId,
       timestampHash: timeStamp,
