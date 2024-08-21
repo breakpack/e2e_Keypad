@@ -12,7 +12,7 @@ import kotlin.random.Random
 data class KeypadResponse(
     val shuffledHashes: Array<String>,
     val imageBase64: String,
-    val timestampHash: String? = null, // Optional parameter
+    val timestampHash: String,
     val userID : String
 )
 
@@ -21,6 +21,7 @@ class KeypadService(private val redisService: RedisService) {
 
     private val numberHashes: Array<String> = Array(10) { "" }
     private var shuffledHashes: Array<String> = Array(12) { "" }
+    private var tempHash: Array<String> = Array(10) { "" } // tempHash 배열 추가
 
     // 0부터 9까지의 숫자에 매칭되는 해시값을 생성하여 배열에 저장
     private fun generateNumberHashes() {
@@ -28,6 +29,7 @@ class KeypadService(private val redisService: RedisService) {
             val randomString = RandomHashGenerator.generate(8)
             numberHashes[i] = RandomHashGenerator.generateHash(randomString)
         }
+        tempHash = numberHashes.copyOf() // 원래 해시값 배열을 tempHash에 저장
     }
 
     // 해시값 배열에 빈값 두 개를 추가하고, 랜덤으로 셔플
@@ -51,10 +53,11 @@ class KeypadService(private val redisService: RedisService) {
         // 이미지를 결합하고 Base64로 인코딩
         val combinedImage = combineImages(imagePaths)
         val imageBase64 = bufferedImageToBase64(combinedImage)
+        val timestamphash = RandomHashGenerator.generateTimestampHash()
 
-        val response = KeypadResponse(shuffledHashes, imageBase64, RandomHashGenerator.generateTimestampHash(), userId)
+        val response = KeypadResponse(shuffledHashes, imageBase64, timestamphash, userId)
         // Redis에 KeypadResponse 저장
-        redisService.saveKeypadResponse(userId, response)
+        redisService.saveKeypadResponse(userId, KeypadResponse(tempHash, imageBase64, timestamphash, userId))
 
         return response
     }

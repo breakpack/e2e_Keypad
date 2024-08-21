@@ -8,7 +8,6 @@ const KeypadUserInput = forwardRef((props, ref) => {
 
     useEffect(() => {
         if(ResultList.length === 6){
-        //   alert(ResultList);
             props.Send(ResultList);
             setResultList([]);
         }
@@ -32,6 +31,7 @@ const KeypadUserInput = forwardRef((props, ref) => {
             setResultList(prevStack => prevStack.slice(0, -1)); 
         } else if (key !== null && value !=='') {
             setFilledCount(prevCount => Math.min(prevCount % 6 + 1, circleCount));
+            // console.log(ResultList)
             setResultList(prevStack => [...prevStack, value]);
         }
     }

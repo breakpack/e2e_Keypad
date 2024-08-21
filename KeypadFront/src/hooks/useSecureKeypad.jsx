@@ -32,7 +32,7 @@ export default function useSecureKeypad() {
     }
 
     const res = await axios.post("/api/verify",data);
-    console.log(res);
+    // console.log(res);
   }
 
   return {
