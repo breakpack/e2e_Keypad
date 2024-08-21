@@ -11,11 +11,13 @@ import kotlin.random.Random
 
 data class KeypadResponse(
     val shuffledHashes: Array<String>,
-    val imageBase64: String
+    val imageBase64: String,
+    val timestampHash: String? = null, // Optional parameter
+    val userID : String
 )
 
 @Service
-class KeypadService {
+class KeypadService(private val redisService: RedisService) {
 
     private val numberHashes: Array<String> = Array(10) { "" }
     private var shuffledHashes: Array<String> = Array(12) { "" }
@@ -35,7 +37,7 @@ class KeypadService {
     }
 
     // 셔플된 해시 배열과 함께 키패드 이미지를 Base64로 인코딩하여 반환
-    fun generateKeypad(): KeypadResponse {
+    fun generateKeypad(userId: String): KeypadResponse {
         generateNumberHashes() // 요청이 들어올 때마다 해시값을 재생성
         createShuffledArray() // 해시값을 셔플
 
@@ -50,7 +52,11 @@ class KeypadService {
         val combinedImage = combineImages(imagePaths)
         val imageBase64 = bufferedImageToBase64(combinedImage)
 
-        return KeypadResponse(shuffledHashes, imageBase64)
+        val response = KeypadResponse(shuffledHashes, imageBase64, RandomHashGenerator.generateTimestampHash(), userId)
+        // Redis에 KeypadResponse 저장
+        redisService.saveKeypadResponse(userId, response)
+
+        return response
     }
 
     // 이미지 결합 함수 - 가로로 출력되도록 수정
