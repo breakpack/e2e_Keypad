@@ -8,8 +8,9 @@ const KeypadUserInput = forwardRef((props, ref) => {
 
     useEffect(() => {
         if(ResultList.length === 6){
-          alert(ResultList);
-          setResultList([]);
+        //   alert(ResultList);
+            props.Send(ResultList);
+            setResultList([]);
         }
       }, [ResultList]);
 

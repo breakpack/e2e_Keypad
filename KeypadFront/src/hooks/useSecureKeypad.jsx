@@ -17,9 +17,9 @@ export default function useSecureKeypad() {
       console.error('Error fetching data:', error);
     }
   }
-
-  const sendUserInput = () => {
-    // alert(ResultList.join());
+  
+  const sendUserInput = (ResultList) => {
+    alert(ResultList);
   }
 
   return {
